@@ -33,8 +33,8 @@ export default function App() {
   );
 }
 
-export function links() {
-  //* Reserved keyword links to add stylization
 
+//* Reserved keyword links to add stylization [Looks like this is for general stylizations]
+export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
