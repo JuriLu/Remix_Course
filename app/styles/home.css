@@ -1,6 +1,6 @@
 #content {
   text-align: center;
-  color: var(--color-primary-10);
+  color: var(--color-white);
 }
 
 #cta {
@@ -9,7 +9,7 @@
 
 #cta a {
   text-decoration: none;
-  background-color: var(--color-secondary-100);
+  background-color: var(--color-secondary-200);
   color: var(--color-primary-800);
   padding: 0.5rem 2rem;
   border-radius: 4px;
