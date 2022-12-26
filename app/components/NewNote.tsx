@@ -2,6 +2,7 @@ import styles from "./NewNote.css";
 
 export default function NewNote() {
   return (
+    //* action ==> defines a path to which this post request should be sent when the form is submitted (Which here is may not be needed because anyways we are at that url when we open this component)
     <form id="note-form" method="post">
       <p>
         <label htmlFor="title">Title</label>
