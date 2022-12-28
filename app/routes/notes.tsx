@@ -1,11 +1,11 @@
 import NewNote, { links as newNoteLinks } from "~/components/NewNote";
 import NoteList, { links as noteListLinks } from "~/components/NoteList";
-import { getStoredNotes, storeNotes } from "~/data/notes";
-import {json, redirect } from "@remix-run/node";
+import { getStoredNotes, Notes, storeNotes } from "~/data/notes";
+import { json, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 export default function NotesPage() {
- const notes =  useLoaderData()
+  const notes = useLoaderData();
   return (
     <main>
       <NewNote />
@@ -16,24 +16,21 @@ export default function NotesPage() {
 
 //*GET Logic Backend
 export async function loader() {
-  const notes = await getStoredNotes()
-  return notes   //* Method 1
+  const notes = await getStoredNotes();
+  return notes; //* Method 1
   // return new Response(JSON.stringify(notes),{headers:{'Content-type':'application/json'}}); //*Method 2
   // return json(notes) //* Method 3 Remix Version
-  
 }
 
 //*POST Logic Backend
 export async function action(data: any) {
   const formData = await data.request.formData();
-  console.log("formData:", formData);
 
-  const noteData = {
+  const noteData: Notes = {
     title: formData.get("title"),
     content: formData.get("content"),
     id: "",
   };
-  console.log("noteData:", noteData);
 
   //* Add Validation
 
@@ -43,6 +40,11 @@ export async function action(data: any) {
   const updatedNotes = existingNotes.concat(noteData);
 
   await storeNotes(updatedNotes);
+
+  //Just Adding 2 second pause to see button transition
+  await new Promise<void>((resolve, reject) =>
+    setTimeout(() => resolve(), 2000)
+  );
 
   return redirect("/notes");
 }

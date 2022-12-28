@@ -1,7 +1,11 @@
-import { Form } from "@remix-run/react";
+import { Form, useTransition as useNavigation } from "@remix-run/react";
 import styles from "./NewNote.css";
 
 export default function NewNote() {
+  const navigation = useNavigation();
+
+  const isSubmitting: boolean = navigation.state === "submitting";
+
   return (
     //* action ==> defines a path to which this post request should be sent when the form is submitted (Which here is may not be needed because anyways we are at that url when we open this component)
     <Form id="note-form" method="post">
@@ -14,7 +18,9 @@ export default function NewNote() {
         <textarea id="content" name="content" rows={5} required />
       </p>
       <div className="form-actions">
-        <button>Add Note</button>
+        <button disabled={isSubmitting}>
+          {isSubmitting ? "Adding..." : "Add Note"}
+        </button>
       </div>
     </Form>
   );
