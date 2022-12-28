@@ -14,7 +14,7 @@ export default function NotesPage() {
   );
 }
 
-
+//*GET Logic Backend
 export async function loader() {
   const notes = await getStoredNotes()
   return notes   //* Method 1
@@ -23,7 +23,7 @@ export async function loader() {
   
 }
 
-
+//*POST Logic Backend
 export async function action(data: any) {
   const formData = await data.request.formData();
   console.log("formData:", formData);
@@ -47,6 +47,7 @@ export async function action(data: any) {
   return redirect("/notes");
 }
 
+//* IMPORTING Styles for Components
 export function links() {
   return [...newNoteLinks(), ...noteListLinks()];
 }
@@ -68,5 +69,6 @@ export function links() {
 
   * {Line 8} useLoaderData() is a special Remix hook that gives us access to the data Returned By 
   * Loader,  just plain data
+  * REMIX WILL ASLO TAKE CARE FOR AUTOMATICALLY UPDATING THE DATA WHEN FETCHING
 
 */
