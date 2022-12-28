@@ -2,11 +2,10 @@ import NewNote, { links as newNoteLinks } from "~/components/NewNote";
 import NoteList, { links as noteListLinks } from "~/components/NoteList";
 import { getStoredNotes, Notes, storeNotes } from "~/data/notes";
 import { json, redirect } from "@remix-run/node";
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
 export default function NotesPage() {
   const notes = useLoaderData();
-  const data = useActionData();
 
   return (
     <main>

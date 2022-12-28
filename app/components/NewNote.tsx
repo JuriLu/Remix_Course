@@ -1,14 +1,20 @@
-import { Form, useTransition as useNavigation } from "@remix-run/react";
+import {
+  Form,
+  useActionData,
+  useTransition as useNavigation,
+} from "@remix-run/react";
 import styles from "./NewNote.css";
 
 export default function NewNote() {
   const navigation = useNavigation();
 
   const isSubmitting: boolean = navigation.state === "submitting";
+  const data = useActionData();
 
   return (
     //* action ==> defines a path to which this post request should be sent when the form is submitted (Which here is may not be needed because anyways we are at that url when we open this component)
     <Form id="note-form" method="post">
+      {data?.message ? <p>{data.message}</p> : null}
       <p>
         <label htmlFor="title">Title</label>
         <input type="text" name="title" id="title" required />
