@@ -2,10 +2,12 @@ import NewNote, { links as newNoteLinks } from "~/components/NewNote";
 import NoteList, { links as noteListLinks } from "~/components/NoteList";
 import { getStoredNotes, Notes, storeNotes } from "~/data/notes";
 import { json, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 
 export default function NotesPage() {
   const notes = useLoaderData();
+  const data = useActionData();
+
   return (
     <main>
       <NewNote />
@@ -32,7 +34,10 @@ export async function action(data: any) {
     id: "",
   };
 
-  //* Add Validation
+  //* Validation   Minlength for title
+  if (noteData.title.trim().length < 4) {
+    return { message: "Title must be longer than 4 characters" };
+  }
 
   const existingNotes = await getStoredNotes();
   noteData.id = new Date().toISOString();
@@ -41,10 +46,10 @@ export async function action(data: any) {
 
   await storeNotes(updatedNotes);
 
-  //Just Adding 2 second pause to see button transition
-  await new Promise<void>((resolve, reject) =>
-    setTimeout(() => resolve(), 2000)
-  );
+  //! Just Adding 2 second pause to see button transition
+  // await new Promise<void>((resolve, reject) =>
+  //   setTimeout(() => resolve(), 2000)
+  // );
 
   return redirect("/notes");
 }
@@ -72,5 +77,7 @@ export function links() {
   * {Line 8} useLoaderData() is a special Remix hook that gives us access to the data Returned By 
   * Loader,  just plain data
   * REMIX WILL ASLO TAKE CARE FOR AUTOMATICALLY UPDATING THE DATA WHEN FETCHING
+  
+  * useActionData --> Gives you data , in our case, returned by the action
 
 */
