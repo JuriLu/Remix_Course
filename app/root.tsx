@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -27,6 +28,34 @@ export default function App() {
       <body>
         <MainNavigation />
         <Outlet />
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
+}
+
+//* Reserved keyword, actually its an component that Remix will display if any error occurs
+//*  anywhere in your application
+export function ErrorBoundary({ error }: any) {
+  //this component always get an error prop *(which is an object)
+  return (
+    <html lang="en">
+      <head>
+        <Meta />
+        <Links />
+        <title>An Error Ocurred!</title>
+      </head>
+      <body>
+        <MainNavigation />
+        <main className="error">
+          <h1>An Error Ocurred!</h1>
+          <p>{error.message}</p>
+          <p>
+            Back to <Link to="/">Safety</Link>
+          </p>
+        </main>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
